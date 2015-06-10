@@ -1,20 +1,21 @@
+/* global Mustache */
 var Empowering = {};
 
-(function(){
+(function() {
     'use strict';
 
     Empowering.Service = function(spec) {
         var service = {};
 
         service.foo = function() {
-            return spec.name
+            return spec.name;
         };
 
         return service;
     };
 
     Empowering.Graphics = {
-        adapter: "jQPlot"
+        adapter: 'jQPlot'
     };
 
     Empowering.Graphics.OT101 = function(attrs) {
@@ -39,15 +40,6 @@ var Empowering = {};
 
         var data = JSON.parse(attrs.data);
 
-        var info_view = {
-            data: data,
-            avgConsum: function() {
-                return function (text, render) {
-
-                }
-            }
-        };
-
         ot101.plot = $.jqplot(attrs.container, [
             [data.averageConsumption],
             [data.consumption],
@@ -59,18 +51,18 @@ var Empowering = {};
                 pointLabels: {show: true, formatString: '%s kWh'}
             },
             series: [
-                {label: "Els teus veins"},
-                {label: "Tu"},
-                {label: "Els teus veins eficients"}
+                {label: 'Els teus veins'},
+                {label: 'Tu'},
+                {label: 'Els teus veins eficients'}
             ],
             legend: {
-                show: true,
+                show: true
             },
             axes: {
                 xaxis: {
                     show: false,
                     renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ["201307"]
+                    ticks: [data.month]
                 },
                 yaxis: {
                     showTicks: false
@@ -78,12 +70,14 @@ var Empowering = {};
             },
             grid: {
                 drawGridlines: false,
-                background: "#fff"
+                background: '#fff'
             }
 
         });
 
-        ot101.info_template = Mustache.render("Has consumit un {{diffAverageConsumption}} ")
+        ot101.infoTemplate = Mustache.render(
+            'Has consumit un {{diffAverageConsumption}}'
+        );
 
         return ot101;
     };
