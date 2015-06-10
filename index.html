@@ -6,9 +6,18 @@
 <script type="text/javascript" src="bower_components/jqplot-bower/dist/plugins/jqplot.categoryAxisRenderer.min.js"></script>
 <script type="text/javascript" src="bower_components/jqplot-bower/dist/plugins/jqplot.pointLabels.min.js"></script>
 <script type="text/javascript" src="bower_components/handlebars/handlebars.min.js"></script>
-<script src="src/empowering.js"></script>
+<script src="src/empowering.js" charset="utf-8"></script>
+
+<style type="text/css">
+    .ot101 {
+        color: blue;
+        font-weight: bolder;
+    }
+</style>
 
 <div id="chartdiv" style="height:400px;width:300px; "></div>
+<div id="infodiv"></div>
+<div id="infocustdiv"></div>
 <script>
     var service_result = '{'
               + '"contractId": "123457ABC",'
@@ -18,10 +27,14 @@
               + '"consumption": 114,'
               + '"averageEffConsumption": 172,'
               + '"averageConsumption": 300,'
-              + '"diffAverageEffConsumption": 1,'
-              + '"diffAverageConsumption": 1,'
+              + '"diffAverageEffConsumption": -33,'
+              + '"diffAverageConsumption": -61,'
               + '"numberCustomersEff": 1,'
-              + '"numberCustomers": 1'
+              + '"numberCustomers": 244'
               + '}';
-    Empowering.Graphics.OT101({container: "chartdiv", data: service_result});
+    Empowering.Graphics.OT101({
+        container: "chartdiv", data: service_result,
+        info: "infodiv",
+        infoCustomers: "infocustdiv"
+    });
 </script>
