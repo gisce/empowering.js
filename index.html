@@ -1,0 +1,27 @@
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="bower_components/jqplot-bower/dist/excanvas.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="bower_components/jqplot-bower/dist/jquery.jqplot.min.js"></script>
+<link rel="stylesheet" type="text/css" href="bower_components/jqplot-bower/dist/jquery.jqplot.css" />
+<script type="text/javascript" src="bower_components/jqplot-bower/dist/plugins/jqplot.barRenderer.min.js"></script>
+<script type="text/javascript" src="bower_components/jqplot-bower/dist/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<script type="text/javascript" src="bower_components/jqplot-bower/dist/plugins/jqplot.pointLabels.min.js"></script>
+<script type="text/javascript" src="bower_components/handlebars/handlebars.min.js"></script>
+<script src="src/empowering.js"></script>
+
+<div id="chartdiv" style="height:400px;width:300px; "></div>
+<script>
+    var service_result = '{'
+              + '"contractId": "123457ABC",'
+              + '"companyId": 1234567890,'
+              + '"month": 201307,'
+              + '"setup": "52234e386cb9fea66d5b2511",'
+              + '"consumption": 114,'
+              + '"averageEffConsumption": 172,'
+              + '"averageConsumption": 300,'
+              + '"diffAverageEffConsumption": 1,'
+              + '"diffAverageConsumption": 1,'
+              + '"numberCustomersEff": 1,'
+              + '"numberCustomers": 1'
+              + '}';
+    Empowering.Graphics.OT101({container: "chartdiv", data: service_result});
+</script>
