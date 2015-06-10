@@ -1,0 +1,8 @@
+-   repo: git://github.com/pre-commit/mirrors-jshint
+    sha: e86225836aadd058036f47a6de9b0ee0440476eb
+    hooks:
+    -   id: jshint
+-   repo: git://github.com/gisce/pre-commit-jscs
+    sha: 54a16e09f4b350be968a0c815628d7c3697bda1d
+    hooks:
+    -   id: jscs
