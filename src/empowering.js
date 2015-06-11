@@ -56,7 +56,8 @@ var Empowering = {};
                 {label: 'Els teus veins eficients'}
             ],
             legend: {
-                show: true
+                show: true,
+                location: 'ne'
             },
             axes: {
                 xaxis: {
@@ -120,6 +121,23 @@ var Empowering = {};
         ot103.plot = $.jqplot(attrs.container, [
             averageConsumption, consumption, averageEffConsumption
         ], {
+            axes: {
+                yaxis: {
+                    pad: 1.2,
+                    tickOptions: {
+                        formatString: '%d kWh'
+                    }
+                }
+            },
+            series: [
+                {label: 'Els teus veins'},
+                {label: 'Tu'},
+                {label: 'Els teus veins eficients'}
+            ],
+            legend: {
+                show: true,
+                location: 'ne'
+            }
         });
 
         return ot103;

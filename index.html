@@ -15,11 +15,12 @@
     }
 </style>
 
-<div id="chartdiv" style="height:400px;width:300px; "></div>
-<div id="infodiv"></div>
-<div id="infocustdiv"></div>
+<div id="chartdiv_ot101" style="height:400px;width:300px; "></div>
+<div id="infodiv_ot101"></div>
+<div id="infocustdiv_ot101"></div>
+<div id="chartdiv_ot103" style="height:400px;width:800px; "></div>
 <script>
-    var service_result = '{'
+    var result_ot101 = '{'
               + '"contractId": "123457ABC",'
               + '"companyId": 1234567890,'
               + '"month": 201307,'
@@ -33,8 +34,157 @@
               + '"numberCustomers": 244'
               + '}';
     Empowering.Graphics.OT101({
-        container: "chartdiv", data: service_result,
-        info: "infodiv",
-        infoCustomers: "infocustdiv"
+        container: "chartdiv_ot101", data: result_ot101,
+        info: "infodiv_o101",
+        infoCustomers: "infocustdiv_o101"
+    });
+
+    var result_ot103 = [
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201307,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": null,
+            "averageEffConsumption": 150,
+            "averageConsumption": 287,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201308,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": null,
+            "averageEffConsumption": 160,
+            "averageConsumption": 290,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201309,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": null,
+            "averageEffConsumption": 174,
+            "averageConsumption": 302,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201310,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": null,
+            "averageEffConsumption": 180,
+            "averageConsumption": 314,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201311,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": null,
+            "averageEffConsumption": 190,
+            "averageConsumption": 320,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201312,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": null,
+            "averageEffConsumption": 194,
+            "averageConsumption": 340,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201401,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": 150,
+            "averageEffConsumption": 200,
+            "averageConsumption": 360,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201402,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": 160,
+            "averageEffConsumption": 150,
+            "averageConsumption": 300,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201403,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": 140,
+            "averageEffConsumption": 133,
+            "averageConsumption": 290,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201404,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": 120,
+            "averageEffConsumption": 90,
+            "averageConsumption": 160,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201405,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": 115,
+            "averageEffConsumption": 130,
+            "averageConsumption": 220,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201406,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": 160,
+            "averageEffConsumption": 145,
+            "averageConsumption": 229,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        },
+        {
+            "contractId": "123457ABC",
+            "companyId": 1234567890,
+            "month": 201407,
+            "setup": "52234e386cb9fea66d5b2511",
+            "consumption": 180,
+            "averageEffConsumption": 130,
+            "averageConsumption": 215,
+            "numberCustomersEff": 1,
+            "numberCustomers": 1
+        }
+    ];
+    Empowering.Graphics.OT103({
+        container: "chartdiv_ot103", data: JSON.stringify(result_ot103),
     });
 </script>
