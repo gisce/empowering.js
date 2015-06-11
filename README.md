@@ -2,6 +2,11 @@
 
 This library works with the Empowering service and make graphics from OTResults.
 
+## Installing
+
+```shell
+$ bower install
+```
 
 ### Coding style
 
