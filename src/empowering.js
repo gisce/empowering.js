@@ -143,6 +143,14 @@ var Empowering = {};
         return ot103;
     };
 
+    Empowering.Graphics.OT201 = function() {
+
+        var ot201 = {};
+
+        return ot201;
+
+    };
+
 }());
 
 Handlebars.registerHelper({
