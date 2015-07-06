@@ -21,6 +21,9 @@
   "dependencies": {
     "jquery": "~2.1.1",
     "jqplot-bower": "~1.0.8",
-    "handlebars": "~3.0.3"
+    "handlebars": "~3.0.3",
+    "d3": "~3.0.0",
+    "backform": "~0.2.0",
+    "bootstrap": "3"
   }
 }

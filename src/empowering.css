@@ -1,0 +1,102 @@
+.ot101.averageConsumption path {
+  fill: #B5FFB0;
+}
+
+.ot101.averageConsumption .icons {
+  fill: #B5FFB0;
+}
+
+.ot101.averageConsumption line {
+    stroke: #B5FFB0;
+    stroke-width: 3px;
+}
+
+.ot101.consumption path {
+  fill: #FFC69F;
+}
+
+.ot101.consumption .icons {
+  fill: #FFC69F;
+}
+
+.ot101.consumption line {
+    stroke: #FFC69F;
+    stroke-width: 3px;
+}
+
+.ot101.averageEffConsumption path {
+  fill: #7D70CC;
+}
+
+.ot101.averageEffConsumption .icons {
+  fill: #7D70CC;
+}
+
+
+.ot101.averageEffConsumption line {
+    stroke: #7D70CC;
+    stroke-width: 3px;
+}
+
+.ot101 text {
+  fill: white;
+  font: 20px sans-serif;
+  text-anchor: middle;
+  font-weight: bolder;
+}
+
+.line {
+  fill: none;
+  stroke-width: 2.5px;
+}
+
+.line.averageConsumption {
+  stroke: #B5FFB0;
+}
+
+.line.consumption {
+  stroke: #FFC69F;
+}
+
+.line.averageEffConsumption {
+  stroke: #7D70CC;
+}
+
+.point {
+    stroke-width: 3px;
+    stroke: #fff;
+
+}
+
+.point.averageConsumption {
+    fill: #B5FFB0;
+}
+
+.point.consumption {
+    fill: #FFC69F;
+}
+
+.point.averageEffConsumption {
+    fill: #7D70CC;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke-width: 1px;
+  stroke: #ccc;
+}
+
+.x.axis line {
+    stroke-width: 1px;
+    stroke: #ccc;
+}
+
+.axis path, .y.axis line {
+    display: none;
+}
+
+.x.vertical {
+    stroke-width: 1px;
+    stroke: #ccc;
+}
