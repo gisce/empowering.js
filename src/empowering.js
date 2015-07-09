@@ -90,6 +90,11 @@ var Empowering = {};
           1: 'consumption',
           2: 'averageEffConsumption'
         };
+        var labels = attrs.labels || {
+            0: 'Your neighbors',
+            1: 'You',
+            2: 'Your efficient neighbors'
+        };
         var icons = {
             0: '\uf0c0',
             1: '\uf007',
@@ -97,9 +102,6 @@ var Empowering = {};
         };
         var width = attrs.width || 600;
         var height = attrs.height || 300;
-        var y = d3.scale.linear()
-                .range([height, 0])
-                .domain([0, d3.max(cons)]);
 
         ot101.plot = d3.select(attrs.container)
                 .append('svg')
@@ -107,8 +109,14 @@ var Empowering = {};
                 .attr('height', height);
 
         var barWidth = width / cons.length;
+        var labelSize = 10;
+        var barHeight = height - labelSize - 10;
         var rectWidth = barWidth * 0.375;
         var barEnerWidth = barWidth * 0.5;
+
+        var y = d3.scale.linear()
+                .range([barHeight, 0])
+                .domain([0, d3.max(cons)]);
 
         var bar = ot101.plot.selectAll('g')
             .data(cons)
@@ -123,19 +131,19 @@ var Empowering = {};
             .attr('style', 'font: ' + parseInt(width / 12) + 'px FontAwesome;' +
                             'text-anchor: start')
             .attr('x', 0)
-            .attr('y', height)
+            .attr('y', barHeight)
             .text(function(d, i) {return icons[i]; });
 
         bar.append('line')
-                .attr('x1', 0)
-                .attr('x2', rectWidth)
-                .attr('y1', height)
-                .attr('y2', height);
+                .attr('x1', width * 0.025)
+                .attr('x2', rectWidth + barEnerWidth)
+                .attr('y1', barHeight)
+                .attr('y2', barHeight);
 
         bar.append('path')
                 .attr('d', function(d) {
                     return roundedRect(
-                        rectWidth, y(d), barEnerWidth, height - y(d), 10,
+                        rectWidth, y(d), barEnerWidth, barHeight - y(d), 10,
                         true, true, false, false);
                 });
 
@@ -143,32 +151,16 @@ var Empowering = {};
                 .attr('x', width * 0.21)
                 .attr('y', function(d) { return y(d) + 15; })
                 .attr('dy', '.' + width * 0.125 + 'em')
+            .attr('class', 'value')
                 .attr('style', 'font-size: ' + width * 0.033 + 'px')
                 .text(function(d) { return d + ' kWh'; });
 
-        ot101.infoTemplate = Handlebars.compile(
-            'Has consumit un <span class="empowering ot101 info">' +
-            '{{abs diffAverageConsumption}}% ' +
-            '{{#positive diffAverageConsumption}}més{{else}}menys' +
-            '{{/positive}}</span> ' +
-            'que els teus veïns/es i un <span class="empowering ot101 info">' +
-            '{{abs diffAverageEffConsumption}}% ' +
-            '{{#positive diffAverageEffConsumption}}més{{else}}menys' +
-            '{{/positive}}</span> que els teus veïns/es eficients'
-        );
-
-        if (attrs.info) {
-            $('#' + attrs.info).html(ot101.infoTemplate(data));
-        }
-
-        ot101.customersTemplate = Handlebars.compile(
-            'Els teus veïns/es són <strong>{{numberCustomers}}</strong> ' +
-                'llars unifamiliars amb la mateixa potència contractada'
-        );
-
-        if (attrs.infoCustomers) {
-            $('#' + attrs.infoCustomers).html(ot101.customersTemplate(data));
-        }
+        bar.append('text')
+            .attr('x', 0)
+            .attr('y', height - 2)
+            .attr('class', 'label')
+            .attr('style', 'font-size: ' + labelSize + 'px')
+            .text(function(d, i) { return labels[i]; });
 
         return ot101;
     };
@@ -185,7 +177,7 @@ var Empowering = {};
 
         var margin = {top: 20, right: 20, bottom: 30, left: 50};
         var width = (attrs.width || 600) - margin.left - margin.right;
-        var height = (attrs.height || 250) - margin.top - margin.bottom;
+        var height = (attrs.height || 300) - margin.top - margin.bottom;
 
         var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
@@ -256,6 +248,28 @@ var Empowering = {};
               .style('text-anchor', 'end')
               .text('kWh');
 
+        var labels = attrs.labels || {
+            0: 'Your neighbors',
+            1: 'You',
+            2: 'Your efficient neighbors'
+        };
+
+        var styles = {
+          0: 'averageConsumption',
+          1: 'consumption',
+          2: 'averageEffConsumption'
+        };
+
+        [0, 1, 2].forEach(function(idx) {
+            bar.append('g')
+                .attr('class', 'legend')
+                .append('text')
+                .attr('x', 100 * idx)
+                .attr('y', height + margin.bottom)
+                .attr('class', styles[idx])
+                .text(labels[idx]);
+        });
+
         bar.selectAll('.ot103')
             .data(data).enter()
             .append('line')
@@ -312,9 +326,104 @@ var Empowering = {};
         return ot103;
     };
 
-    Empowering.Graphics.OT201 = function() {
+    Empowering.Graphics.OT201 = function(attrs) {
+
+        /*
+        {
+            "contractId": "1234567ABC",
+            "companyId": 1234567890,
+            "month": 201307,
+            "setup": "52234e386cb9fea66d5b2511",
+            "actualConsumption": 1,
+            "previousConsumption": 1,
+            "diffConsumption": 1
+        }
+         */
 
         var ot201 = {};
+
+        if (typeof attrs.data === 'string') {
+            attrs.data = JSON.parse(attrs.data);
+        }
+        var data = attrs.data;
+
+        var cons = [
+            parseInt(data.previousConsumption),
+            parseInt(data.actualConsumption)
+        ];
+        var styles = {
+          0: 'previousConsumption',
+          1: 'consumption'
+        };
+        var labels = attrs.labels || {
+            0: 'Last year consumption',
+            1: 'Actual consumption'
+        };
+        var icons = {
+            0: '\uf007',
+            1: '\uf007'
+        };
+
+        var width = attrs.width || 600;
+        var height = attrs.height || 300;
+
+        ot201.plot = d3.select(attrs.container)
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+        var barWidth = width / cons.length;
+        var labelSize = 10;
+        var barHeight = height - labelSize - 10;
+        var rectWidth = barWidth * 0.375;
+        var barEnerWidth = barWidth * 0.5;
+
+        var y = d3.scale.linear()
+                .range([barHeight, 0])
+                .domain([0, d3.max(cons)]);
+
+        var bar = ot201.plot.selectAll('g')
+            .data(cons)
+            .enter().append('g')
+            .attr('class', function(d, i) {return 'ot201 ' + styles[i]; })
+            .attr('transform', function(d, i) {
+                return 'translate(' + i * barWidth + ', 0)';
+            });
+
+        bar.append('text')
+            .attr('class', 'icons')
+            .attr('style', 'font: ' + parseInt(width / 12) + 'px FontAwesome;' +
+                            'text-anchor: start')
+            .attr('x', 0)
+            .attr('y', barHeight)
+            .text(function(d, i) {return icons[i]; });
+
+        bar.append('line')
+                .attr('x1', width * 0.025)
+                .attr('x2', rectWidth + barEnerWidth)
+                .attr('y1', barHeight)
+                .attr('y2', barHeight);
+
+        bar.append('path')
+            .attr('d', function(d) {
+                return roundedRect(
+                    rectWidth, y(d), barEnerWidth, barHeight - y(d), 10,
+                    true, true, false, false);
+            });
+
+        bar.append('text')
+            .attr('x', (rectWidth + 10) * 1.5)
+            .attr('y', function(d) { return y(d) + 25; })
+            .attr('class', 'value')
+            .attr('style', 'font-size: ' + width * 0.033 + 'px')
+            .text(function(d) { return d + ' kWh'; });
+
+        bar.append('text')
+            .attr('x', 0)
+            .attr('y', height - 2)
+            .attr('class', 'label')
+            .attr('style', 'font-size: ' + labelSize + 'px')
+            .text(function(d, i) { return labels[i]; });
 
         return ot201;
 
@@ -391,5 +500,9 @@ Handlebars.registerHelper({
     abs: function(value) {
         'use strict';
         return Math.abs(value);
+    },
+    absInt: function(value) {
+        'use strict';
+        return Math.abs(parseInt(value));
     }
 });

@@ -2,67 +2,89 @@
   fill: #5DC221;
 }
 
-.ot101.averageConsumption .icons {
+.ot101.averageConsumption .icons, .ot101.averageConsumption .label {
   fill: #5DC221;
 }
 
 .ot101.averageConsumption line {
     stroke: #5DC221;
-    stroke-width: 3px;
+    stroke-width: 2px;
 }
 
 .ot101.consumption path {
   fill: #DECD26;
 }
 
-.ot101.consumption .icons {
+.ot101.consumption .icons, .ot101.consumption .label {
   fill: #DECD26;
 }
 
 .ot101.consumption line {
     stroke: #DECD26;
-    stroke-width: 3px;
+    stroke-width: 2px;
+}
+
+.ot101.consumption {
+    color: #DECD26;
 }
 
 .ot101.averageEffConsumption path {
   fill: #CC234A;
 }
 
-.ot101.averageEffConsumption .icons {
+.ot101.averageEffConsumption .icons, .ot101.averageEffConsumption .label {
   fill: #CC234A;
 }
 
 
 .ot101.averageEffConsumption line {
     stroke: #CC234A;
-    stroke-width: 3px;
+    stroke-width: 2px;
 }
 
-.ot101 text {
+.ot101 .value {
   fill: white;
   font-family: sans-serif;
   text-anchor: middle;
   font-weight: bolder;
 }
 
-.line {
+
+.ot103 .legend text {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.ot103 .line {
   fill: none;
   stroke-width: 2.5px;
 }
 
-.line.averageConsumption {
+.ot103 .line.averageConsumption {
   stroke: #5DC221;
 }
 
-.line.consumption {
+.ot103 .legend .averageConsumption {
+  fill: #5DC221;
+}
+
+.ot103 .line.consumption {
   stroke: #DECD26;
 }
 
-.line.averageEffConsumption {
+.ot103 .legend .consumption {
+    fill: #DECD26;
+}
+
+.ot103 .line.averageEffConsumption {
   stroke: #CC234A;
 }
 
-.point {
+.ot103 .legend .averageEffConsumption {
+    fill: #CC234A;
+}
+
+.ot103 .point {
     stroke-width: 2px;
     stroke: #fff;
 
@@ -103,4 +125,45 @@
 
 .ot103 text {
     font: 10px sans-serif;
+}
+
+.ot201 .value {
+  fill: white;
+  font-family: sans-serif;
+  text-anchor: middle;
+  font-weight: bolder;
+}
+
+.ot201.previousConsumption path {
+  fill: #901990;
+}
+
+.ot201.previousConsumption .icons, .ot201.previousConsumption .label {
+  fill: #901990;
+}
+
+.ot201.previousConsumption line {
+    stroke: #901990;
+    stroke-width: 2px;
+}
+
+.ot201.previousConsumption {
+    color: #901990;
+}
+
+.ot201.consumption path {
+  fill: #DECD26;
+}
+
+.ot201.consumption .icons, .ot201.consumption .label {
+  fill: #DECD26;
+}
+
+.ot201.consumption line {
+    stroke: #DECD26;
+    stroke-width: 2px;
+}
+
+.ot201.consumption {
+    color: #DECD26;
 }

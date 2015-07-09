@@ -19,7 +19,9 @@
     <div id="infodiv_ot101"></div>
     <div id="infocustdiv_ot101"></div>
     <h1>OT103</h1>
-    <div id="chartdiv_ot103" style="height:400px;width:800px; "></div>
+    <div id="chartdiv_ot103"></div>
+    <h1>OT201</h1>
+    <div id="chartdiv_ot201"></div>
     <h1>Building Data Form</h1>
     <form id="form_building_data" class="form-horizontal"></form>
 </div>
@@ -42,7 +44,8 @@
     Empowering.Graphics.OT101({
         container: "#chartdiv_ot101", data: result_ot101,
         info: "infodiv_ot101",
-        infoCustomers: "infocustdiv_ot101"
+        infoCustomers: "infocustdiv_ot101",
+        width: 600, labels: {0: 'Els teus veïns', 1: 'Tu', 2: 'Els teus veïns efficients'}
     });
 
     /* OT103 Example */
@@ -199,17 +202,15 @@
     /* OT201 Example */
 
     var result_ot201 = {
-        "contractId": "1234567ABC",
-        "companyId": 1234567890,
-        "month": 201307,
-        "setup": "52234e386cb9fea66d5b2511",
-        "actualConsumption": 1,
-        "previousConsumption": 1,
-        "diffConsumption": 1
+      "actualConsumption": 152.61667,
+      "contractId": "00085",
+      "diffConsumption": 36.37,
+      "month": 201501,
+      "previousConsumption": 111.91228
     };
     Empowering.Graphics.OT201({
-        contaier: "chartdiv_ot201", data: JSON.stringify(result_ot201)
-    })
+        container: "#chartdiv_ot201", data: result_ot201
+    });
 </script>
 
 
