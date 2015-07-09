@@ -76,11 +76,14 @@ var Empowering = {};
          */
 
         var ot101 = {};
-        var data = JSON.parse(attrs.data);
+        if (typeof attrs.data === 'string') {
+            attrs.data = JSON.parse(attrs.data);
+        }
+        var data = attrs.data;
         var cons = [
-            data.averageConsumption,
-            data.consumption,
-            data.averageEffConsumption
+            parseInt(data.averageConsumption),
+            parseInt(data.consumption),
+            parseInt(data.averageEffConsumption)
         ];
         var styles = {
           0: 'averageConsumption',
@@ -169,13 +172,16 @@ var Empowering = {};
     Empowering.Graphics.OT103 = function(attrs) {
         var ot103 = {};
 
-        var data = JSON.parse(attrs.data);
+        if (typeof attrs.data === 'string') {
+            attrs.data = JSON.parse(attrs.data);
+        }
+        var data = attrs.data;
 
         var parseDate = d3.time.format('%Y%m').parse;
 
         var margin = {top: 20, right: 20, bottom: 30, left: 50};
-        var width = 800 - margin.left - margin.right;
-        var height = 300 - margin.top - margin.bottom;
+        var width = 600 - margin.left - margin.right;
+        var height = 250 - margin.top - margin.bottom;
 
         var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
@@ -271,7 +277,7 @@ var Empowering = {};
             .attr('class', 'point averageEffConsumption')
             .attr('cx', function(d) { return x(d.month); })
             .attr('cy', function(d) { return y(d.averageEffConsumption); })
-            .attr('r', 5);
+            .attr('r', 4);
 
         bar.append('path')
             .datum(averageConsumption)
@@ -284,7 +290,7 @@ var Empowering = {};
             .attr('class', 'point averageConsumption')
             .attr('cx', function(d) { return x(d.month); })
             .attr('cy', function(d) { return y(d.averageConsumption); })
-            .attr('r', 5);
+            .attr('r', 4);
 
         bar.append('path')
             .datum(consumption)
@@ -297,7 +303,7 @@ var Empowering = {};
             .attr('class', 'point consumption')
             .attr('cx', function(d) { return x(d.month); })
             .attr('cy', function(d) { return y(d.consumption); })
-            .attr('r', 5);
+            .attr('r', 4);
 
         return ot103;
     };
