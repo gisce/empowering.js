@@ -95,8 +95,8 @@ var Empowering = {};
             1: '\uf007',
             2: '\uf0c0'
         };
-        var width = 600;
-        var height = 300;
+        var width = attrs.width || 600;
+        var height = attrs.height || 300;
         var y = d3.scale.linear()
                 .range([height, 0])
                 .domain([0, d3.max(cons)]);
@@ -107,6 +107,8 @@ var Empowering = {};
                 .attr('height', height);
 
         var barWidth = width / cons.length;
+        var rectWidth = barWidth * 0.375;
+        var barEnerWidth = barWidth * 0.5;
 
         var bar = ot101.plot.selectAll('g')
             .data(cons)
@@ -118,28 +120,30 @@ var Empowering = {};
 
         bar.append('text')
             .attr('class', 'icons')
-            .attr('style', 'font: 40px FontAwesome; text-anchor: start')
+            .attr('style', 'font: ' + parseInt(width / 12) + 'px FontAwesome;' +
+                            'text-anchor: start')
             .attr('x', 0)
             .attr('y', height)
             .text(function(d, i) {return icons[i]; });
 
         bar.append('line')
                 .attr('x1', 0)
-                .attr('x2', '75')
+                .attr('x2', rectWidth)
                 .attr('y1', height)
                 .attr('y2', height);
 
         bar.append('path')
                 .attr('d', function(d) {
                     return roundedRect(
-                        75, y(d), 100, height - y(d), 10,
+                        rectWidth, y(d), barEnerWidth, height - y(d), 10,
                         true, true, false, false);
                 });
 
         bar.append('text')
-                .attr('x', 125)
+                .attr('x', width * 0.21)
                 .attr('y', function(d) { return y(d) + 15; })
-                .attr('dy', '.75em')
+                .attr('dy', '.' + width * 0.125 + 'em')
+                .attr('style', 'font-size: ' + width * 0.033 + 'px')
                 .text(function(d) { return d + ' kWh'; });
 
         ot101.infoTemplate = Handlebars.compile(
@@ -180,8 +184,8 @@ var Empowering = {};
         var parseDate = d3.time.format('%Y%m').parse;
 
         var margin = {top: 20, right: 20, bottom: 30, left: 50};
-        var width = 600 - margin.left - margin.right;
-        var height = 250 - margin.top - margin.bottom;
+        var width = (attrs.width || 600) - margin.left - margin.right;
+        var height = (attrs.height || 250) - margin.top - margin.bottom;
 
         var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
