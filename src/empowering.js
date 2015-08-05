@@ -465,11 +465,10 @@ var Empowering = {};
 
         tip.append('div')
             .attr('class', 'icon')
-            .append('img')
-            .attr('src', function(d) { return 'src/icons/TIP_' +
-                parseInt(d.tipId).toString().charAt(0) + '.svg';})
-            .attr('width', iconSize)
-            .attr('height', iconSize);
+            .append('i')
+            .attr('class', function(d) { return 'icon-TIP_' +
+                parseInt(d.tipId).toString().charAt(0);})
+            .attr('style', 'font-size: ' + iconSize);
 
         tip.append('div')
             .attr('class', 'text')
