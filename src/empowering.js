@@ -468,7 +468,7 @@ var Empowering = {};
             .append('i')
             .attr('class', function(d) { return 'icon-TIP_' +
                 parseInt(d.tipId).toString().charAt(0);})
-            .attr('style', 'font-size: ' + iconSize);
+            .attr('style', 'font-size: ' + iconSize + 'px');
 
         tip.append('div')
             .attr('class', 'text')
