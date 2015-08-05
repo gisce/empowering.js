@@ -22,6 +22,8 @@
     <div id="chartdiv_ot103"></div>
     <h1>OT201</h1>
     <div id="chartdiv_ot201"></div>
+    <h1>OT401</h1>
+    <div id="chartdiv_ot401"></div>
     <h1>Building Data Form</h1>
     <form id="form_building_data" class="form-horizontal"></form>
 </div>
@@ -211,6 +213,73 @@
     Empowering.Graphics.OT201({
         container: "#chartdiv_ot201", data: result_ot201
     });
+
+    var result_ot401 = [
+        {
+          "_updated":"1970-01-01T00:00:00Z",
+          "companyId":3108188543,
+          "tipId":117.0,
+          "month":201504,
+          "_links":{
+             "self":{
+                "href":"OT401Results/559ef284dfeb57703a80577e",
+                "title":"Ot401result"
+             }
+          },
+          "tipDescription":{
+             "catalan":"Apagueu totalment els aparells com la TV o l'ordinador quan no els estigueu utilitzant",
+             "spanish":"Desconecte aparatos como la TV o el ordenador cuando no los est\u00e9 utilizando"
+          },
+          "_created":"2015-07-09T22:15:32Z",
+          "_id":"559ef284dfeb57703a80577e",
+          "_etag":"33e69169254667ec4f43822ea3f8daf863134952",
+          "contractId":"00133"
+        },
+        {
+          "_updated":"1970-01-01T00:00:00Z",
+          "companyId":3108188543,
+          "tipId":133.0,
+          "month":201504,
+          "_links":{
+             "self":{
+                "href":"OT401Results/559ef284dfeb57703a80577f",
+                "title":"Ot401result"
+             }
+          },
+          "tipDescription":{
+             "catalan":"Si teniu cuina el\u00e8ctrica, recordeu que podeu apagar els fogons dos o tres minuts abans de finalitzar el temps de cocci\u00f3 dels aliments: la cuina es mantindr\u00e0 calenta i els aliments acabaran de coure's correctament",
+             "spanish":"Si tiene una cocina el\u00e9ctrica, recuerde que puede apagar los quemadores dos o tres minutos antes de finalizar el tiempo de cocci\u00f3n de los alimentos: la cocina se mantendr\u00e1 caliente y los alimentos terminar\u00e1n de cocerse correctamente"
+          },
+          "_created":"2015-07-09T22:15:32Z",
+          "_id":"559ef284dfeb57703a80577f",
+          "_etag":"a0f8b05b7ff4bf2c316dc6b240038b9f48354e36",
+          "contractId":"00133"
+        },
+        {
+          "_updated":"1970-01-01T00:00:00Z",
+          "companyId":3108188543,
+          "tipId":402.0,
+          "month":201504,
+          "_links":{
+             "self":{
+                "href":"OT401Results/559ef284dfeb57703a805780",
+                "title":"Ot401result"
+             }
+          },
+          "tipDescription":{
+             "catalan":"Utilitzeu sensors de moviment en llums exteriors",
+             "spanish":"Utilice sensores de movimiento en luces exteriores"
+          },
+          "_created":"2015-07-09T22:15:32Z",
+          "_id":"559ef284dfeb57703a805780",
+          "_etag":"0b06aa344d90ce5d292250b1e4f861fdc89175f2",
+          "contractId":"00133"
+        }
+    ];
+
+    Empowering.Graphics.OT401({
+        container: '#chartdiv_ot401', data: result_ot401, locale: 'ca'
+    })
 </script>
 
 

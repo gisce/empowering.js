@@ -429,6 +429,56 @@ var Empowering = {};
 
     };
 
+    Empowering.Graphics.OT401 = function(attrs) {
+        var ot401 = {};
+
+        var LOCALES = {
+            ca: 'catalan',
+            es: 'spanish',
+            en: 'english',
+            de: 'german',
+            it: 'italian',
+            fr: 'french'
+        };
+
+        if (typeof attrs.data === 'string') {
+            attrs.data = JSON.parse(attrs.data);
+        }
+
+        var width = attrs.width || 600;
+        var height = attrs.height || 300;
+        var tpl = attrs.tpl || 3;
+        var tipWidth = width / tpl;
+        var iconSize = attrs.iconSize || 32;
+
+        ot401.plot = d3.select(attrs.container)
+                .append('div')
+                .attr('style', 'width: ' + width + 'px; height: ' +
+                                height + 'px')
+                .attr('class', 'ot401');
+
+        var tip = ot401.plot.selectAll('div')
+            .data(attrs.data)
+            .enter().append('div')
+            .attr('class', 'tip')
+            .attr('style', 'width: ' + tipWidth + 'px');
+
+        tip.append('div')
+            .attr('class', 'icon')
+            .append('img')
+            .attr('src', function(d) { return 'src/icons/TIP_' +
+                parseInt(d.tipId).toString().charAt(0) + '.svg';})
+            .attr('width', iconSize)
+            .attr('height', iconSize);
+
+        tip.append('div')
+            .attr('class', 'text')
+            .text(function(d) {
+                return d.tipDescription[LOCALES[attrs.locale]];
+            });
+
+    };
+
     Empowering.Forms = {};
 
     Empowering.Forms.BuildingData = function(attrs) {
