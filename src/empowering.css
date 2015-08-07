@@ -181,7 +181,7 @@
 
 
 .cch .plot {
-    fill: rgba(250, 250, 255, 0.6);
+    fill: rgba(250, 250, 255, 0);
 }
 .cch .grid .tick {
     stroke: lightgrey;
@@ -205,8 +205,13 @@
 }
 
 .cch .focus circle {
-  fill: none;
+  fill: steelblue;
   stroke: steelblue;
+}
+
+.cch .focus text {
+    font-weight: bold;
+    fill: #000;
 }
 
 

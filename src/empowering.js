@@ -615,23 +615,16 @@ var Empowering = {};
                   'translate(' + margin.left + ',' + margin.top + ')')
             .call(zoom);
 
-        var focus = cch.plot.append('g')
-            .attr('class', 'focus')
-            .style('display', 'none');
-
-        focus.append('circle')
-            .attr('r', 4.5);
-
-        focus.append('text')
-            .attr('x', 9)
-            .attr('dy', '.35em');
-
         cch.plot.append('svg:rect')
             .attr('width', width)
             .attr('height', height)
             .attr('class', 'plot')
-            .on('mouseover', function() { focus.style('display', null); })
-            .on('mouseout', function() { focus.style('display', 'none'); })
+            .on('mouseover', function() {
+                focus.style('display', null);
+            })
+            .on('mouseout', function() {
+                focus.style('display', 'none');
+            })
             .on('mousemove', mousemove);
 
         var makeXAxis = function() {
@@ -720,6 +713,29 @@ var Empowering = {};
             .attr('class', 'line')
             .attr('d', line);
 
+        var focus = cch.plot.append('g')
+            .attr('class', 'focus')
+            .style('display', 'none');
+
+        focus.append('circle')
+            .attr('r', 4.5);
+
+        focus.append('text')
+            .attr('x', 9)
+            .attr('dy', '.35em');
+
+        cch.downloadCSV = function() {
+            var csv = ['date;value'];
+            attrs.data.forEach(function(el) {
+                csv.push(el.date + ';' + el.value);
+            });
+            window.open('data:application/csv;filename=file.csv;base64,' +
+                btoa(csv.join('\n'))
+            );
+
+        };
+
+        return cch;
     };
 
     Empowering.Forms = {};
