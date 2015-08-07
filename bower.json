@@ -20,7 +20,7 @@
   "dependencies": {
     "jquery": "~2.1.1",
     "handlebars": "~3.0.3",
-    "d3": "~3.0.0",
+    "d3": "3",
     "backform": "~0.2.0",
     "bootstrap": "3",
     "font-awesome": "4"

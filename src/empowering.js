@@ -14,6 +14,56 @@ var Empowering = {};
         return service;
     };
 
+    Empowering.LOCALES = {
+        ca: d3.locale({
+            decimal: ',',
+            thousands: '.',
+            grouping: [3],
+            currency: ['', ' €'],
+            dateTime: '%A, %e de %B de %Y, %X',
+            date: '%d/%m/%Y',
+            time: '%H:%M:%S',
+            periods: ['AM', 'PM'],
+            days: [
+                'diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous',
+                'divendres', 'dissabte'
+            ],
+            shortDays: ['dg.', 'dl.', 'dt.', 'dc.', 'dj.', 'dv.', 'ds.'],
+            months: [
+                'gener', 'febrer', 'març', 'abril', 'maig', 'juny',
+                'juliol', 'agost', 'setembre', 'octubre', 'novembre',
+                'desembre'
+            ],
+            shortMonths: [
+                'gen.', 'febr.', 'març', 'abr.', 'maig', 'juny', 'jul.', 'ag.',
+                'set.', 'oct.', 'nov.', 'des.'
+            ]
+        }),
+        es: d3.locale({
+            decimal: ',',
+            thousands: '.',
+            grouping: [3],
+            currency: ['', ' €'],
+            dateTime: '%A, %e de %B de %Y, %X',
+            date: '%d/%m/%Y',
+            time: '%H:%M:%S',
+            periods: ['AM', 'PM'],
+            days: [
+                'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes',
+                'sábado'
+            ],
+            shortDays: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            months: [
+                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
+                'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+            ],
+            shortMonths: [
+                'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep',
+                'oct', 'nov', 'dic'
+            ]
+        })
+    };
+
     Empowering.Graphics = {
 
     };
@@ -330,7 +380,7 @@ var Empowering = {};
 
         /*
         {
-            "contractId": "1234567ABC",
+            'contractId": "1234567ABC",
             "companyId": 1234567890,
             "month": 201307,
             "setup": "52234e386cb9fea66d5b2511",
@@ -475,6 +525,200 @@ var Empowering = {};
             .text(function(d) {
                 return d.tipDescription[LOCALES[attrs.locale]];
             });
+
+    };
+
+    Empowering.Graphics.CCH = function(attrs) {
+
+        var cch = {};
+
+        if (typeof attrs.data === 'string') {
+            attrs.data = JSON.parse(attrs.data);
+        }
+        var data = attrs.data;
+
+        var margin = {
+            top: 20,
+            right: 20,
+            bottom: 70,
+            left: 45
+        };
+
+        var width = 600 - margin.left - margin.right;
+        var height = 400 - margin.top - margin.bottom;
+
+        var x = d3.time.scale()
+            .domain(d3.extent(data, function(d) {
+            return d.date;
+        }))
+            .range([0, width]);
+
+        var y = d3.scale.linear()
+            .domain(d3.extent(data, function(d) {
+            return d.value;
+        }))
+            .range([height, 0]);
+
+        var line = d3.svg.line()
+            .x(function(d) {
+            return x(d.date);
+        })
+            .y(function(d) {
+            return y(d.value);
+        });
+
+        function zoomed() {
+            console.log(d3.event.translate);
+            console.log(d3.event.scale);
+            cch.plot.select('.x.axis').call(xAxis).selectAll('text')
+                .attr('dx', '-2.8em')
+            .attr('dy', '.15em')
+            .attr('transform', 'rotate(-65)');
+            cch.plot.select('.y.axis').call(yAxis);
+            cch.plot.select('.x.grid')
+                .call(makeXAxis()
+                .tickSize(-height, 0, 0)
+                .tickFormat(''));
+            cch.plot.select('.y.grid')
+                .call(makeYAxis()
+                .tickSize(-width, 0, 0)
+                .tickFormat(''));
+            cch.plot.select('.line')
+                .attr('class', 'line')
+                .attr('d', line);
+        }
+
+        function mousemove() {
+            var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+            var x0 = x.invert(d3.mouse(this)[0]);
+            var i = bisectDate(data, x0, 1);
+            var d0 = data[i - 1];
+            var d1 = data[i];
+            var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+            focus.attr('transform',
+                       'translate(' + x(d.date) + ',' + y(d.value) + ')');
+            focus.select('text').text(d.value + ' kWh');
+        }
+
+        var zoom = d3.behavior.zoom()
+            .x(x)
+            .scaleExtent([1, 480])
+            .on('zoom', zoomed);
+
+        cch.plot = d3.select(attrs.container)
+            .append('svg:svg')
+            .attr('class', 'cch')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('svg:g')
+            .attr('transform',
+                  'translate(' + margin.left + ',' + margin.top + ')')
+            .call(zoom);
+
+        var focus = cch.plot.append('g')
+            .attr('class', 'focus')
+            .style('display', 'none');
+
+        focus.append('circle')
+            .attr('r', 4.5);
+
+        focus.append('text')
+            .attr('x', 9)
+            .attr('dy', '.35em');
+
+        cch.plot.append('svg:rect')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('class', 'plot')
+            .on('mouseover', function() { focus.style('display', null); })
+            .on('mouseout', function() { focus.style('display', 'none'); })
+            .on('mousemove', mousemove);
+
+        var makeXAxis = function() {
+            return d3.svg.axis()
+                .scale(x)
+                .orient('bottom')
+                .ticks(12);
+        };
+
+        var makeYAxis = function() {
+            return d3.svg.axis()
+                .scale(y)
+                .orient('left')
+                .ticks(5);
+        };
+
+        var locale = Empowering.LOCALES[attrs.locale || 'ca_ES'];
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient('bottom')
+            .ticks(12)
+            .tickFormat(locale.timeFormat.multi([
+              ['.%L', function(d) { return d.getMilliseconds(); }],
+              [':%S', function(d) { return d.getSeconds(); }],
+              ['%I:%M', function(d) { return d.getMinutes(); }],
+              ['%I %p', function(d) { return d.getHours(); }],
+              ['%a %d', function(d) {
+                  return d.getDay() && d.getDate() !== 1;
+              }],
+              ['%b %d', function(d) { return d.getDate() !== 1; }],
+              ['%B', function(d) { return d.getMonth(); }],
+              ['%Y', function() { return true; }]
+            ]));
+
+        cch.plot.append('svg:g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0, ' + height + ')')
+            .call(xAxis)
+            .selectAll('text')
+            .attr('dx', '-2.8em')
+            .attr('dy', '.15em')
+            .attr('transform', 'rotate(-65)');
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient('left')
+            .ticks(5);
+
+        cch.plot.append('g')
+            .attr('class', 'y axis')
+            .call(yAxis)
+            .append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', 6)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('kWh');
+
+        cch.plot.append('g')
+            .attr('class', 'x grid')
+            .attr('transform', 'translate(0,' + height + ')')
+            .call(makeXAxis()
+            .tickSize(-height, 0, 0)
+            .tickFormat(''));
+
+        cch.plot.append('g')
+            .attr('class', 'y grid')
+            .call(makeYAxis()
+            .tickSize(-width, 0, 0)
+            .tickFormat(''));
+
+        cch.plot.append('svg:clipPath')
+            .attr('id', 'clip')
+            .append('svg:rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', width)
+            .attr('height', height);
+
+        var chartBody = cch.plot.append('g')
+            .attr('clip-path', 'url(#clip)');
+
+        chartBody.append('svg:path')
+            .datum(data)
+            .attr('class', 'line')
+            .attr('d', line);
 
     };
 

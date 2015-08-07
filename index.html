@@ -24,6 +24,8 @@
     <div id="chartdiv_ot201"></div>
     <h1>OT401</h1>
     <div id="chartdiv_ot401"></div>
+    <h1>Curves horàries</h1>
+    <div id="chartdiv_cch"></div>
     <h1>Building Data Form</h1>
     <form id="form_building_data" class="form-horizontal"></form>
 </div>
@@ -278,8 +280,16 @@
     ];
 
     Empowering.Graphics.OT401({
-        container: '#chartdiv_ot401', data: result_ot401, locale: 'ca',
-    })
+        container: '#chartdiv_ot401', data: result_ot401, locale: 'ca'
+    });
+
+    d3.json('cch.json', function(err, json) {
+        console.log(json.length);
+        Empowering.Graphics.CCH({
+            container: '#chartdiv_cch', data: json, locale: 'ca'
+        })
+    });
+
 </script>
 
 
