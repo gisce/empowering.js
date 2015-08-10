@@ -2,6 +2,10 @@
 
 This library works with the Empowering service and make graphics from OTResults.
 
+## Demo
+
+[http://code.gisce.net/empowering.js](http://code.gisce.net/empowering.js)
+
 ## Installing
 
 ```shell
