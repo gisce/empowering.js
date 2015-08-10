@@ -589,8 +589,9 @@ var Empowering = {};
         }
 
         function mousemove() {
+            var coords = d3.mouse(this);
             var bisectDate = d3.bisector(function(d) { return d.date; }).left;
-            var x0 = x.invert(d3.mouse(this)[0]);
+            var x0 = x.invert(coords[0]);
             var i = bisectDate(data, x0, 1);
             var d0 = data[i - 1];
             var d1 = data[i];
@@ -706,7 +707,14 @@ var Empowering = {};
             .attr('height', height);
 
         var chartBody = cch.plot.append('g')
-            .attr('clip-path', 'url(#clip)');
+            .attr('clip-path', 'url(#clip)')
+            .on('mouseover', function() {
+                focus.style('display', null);
+            })
+            .on('mouseout', function() {
+                focus.style('display', 'none');
+            })
+            .on('mousemove', mousemove);
 
         chartBody.append('svg:path')
             .datum(data)
