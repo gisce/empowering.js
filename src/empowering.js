@@ -603,7 +603,7 @@ var Empowering = {};
 
         var zoom = d3.behavior.zoom()
             .x(x)
-            .scaleExtent([1, 480])
+            .scaleExtent([1, data.length / 12])
             .on('zoom', zoomed);
 
         cch.plot = d3.select(attrs.container)
