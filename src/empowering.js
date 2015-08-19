@@ -598,7 +598,7 @@ var Empowering = {};
             var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
             focus.attr('transform',
                        'translate(' + x(d.date) + ',' + y(d.value) + ')');
-            focus.select('text').text(d.value + ' kWh');
+            focus.select('text').text(d.value + ' Wh');
         }
 
         var zoom = d3.behavior.zoom()
@@ -683,7 +683,7 @@ var Empowering = {};
             .attr('y', 6)
             .attr('dy', '.71em')
             .style('text-anchor', 'end')
-            .text('kWh');
+            .text('Wh');
 
         cch.plot.append('g')
             .attr('class', 'x grid')
