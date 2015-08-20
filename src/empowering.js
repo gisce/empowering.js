@@ -748,7 +748,10 @@ var Empowering = {};
         cch.downloadCSV = function() {
             var csv = ['date;value'];
             attrs.data.forEach(function(el) {
-                csv.push(el.date + ';' + el.value);
+                var date = (
+                    new Date(el.date)
+                ).toJSON().substring(0, 16).replace('T', ' ');
+                csv.push(date + ';' + el.value);
             });
             window.open('data:application/csv;filename=file.csv;base64,' +
                 btoa(csv.join('\n'))
