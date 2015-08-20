@@ -560,6 +560,7 @@ var Empowering = {};
             .range([height, 0]);
 
         var line = d3.svg.line()
+            .interpolate('monotone')
             .x(function(d) {
             return x(d.date);
         })
@@ -567,9 +568,13 @@ var Empowering = {};
             return y(d.value);
         });
 
+        var area = d3.svg.area()
+            .interpolate('monotone')
+            .x(function(d) { return x(d.date); })
+            .y0(height)
+            .y1(function(d) { return y(d.value); });
+
         function zoomed() {
-            console.log(d3.event.translate);
-            console.log(d3.event.scale);
             cch.plot.select('.x.axis').call(xAxis).selectAll('text')
                 .attr('dx', '-2.8em')
             .attr('dy', '.15em')
@@ -586,6 +591,9 @@ var Empowering = {};
             cch.plot.select('.line')
                 .attr('class', 'line')
                 .attr('d', line);
+            cch.plot.select('.area')
+                .attr('class', 'area')
+                .attr('d', area(data));
         }
 
         function mousemove() {
@@ -598,12 +606,12 @@ var Empowering = {};
             var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
             focus.attr('transform',
                        'translate(' + x(d.date) + ',' + y(d.value) + ')');
-            focus.select('text').text(d.value + ' kWh');
+            focus.select('text').text(d.value + ' Wh');
         }
 
         var zoom = d3.behavior.zoom()
             .x(x)
-            .scaleExtent([1, 480])
+            .scaleExtent([1, data.length / 12])
             .on('zoom', zoomed);
 
         cch.plot = d3.select(attrs.container)
@@ -683,7 +691,7 @@ var Empowering = {};
             .attr('y', 6)
             .attr('dy', '.71em')
             .style('text-anchor', 'end')
-            .text('kWh');
+            .text('Wh');
 
         cch.plot.append('g')
             .attr('class', 'x grid')
@@ -705,6 +713,11 @@ var Empowering = {};
             .attr('y', 0)
             .attr('width', width)
             .attr('height', height);
+
+        cch.plot.append('path')
+            .attr('class', 'area')
+            .attr('clip-path', 'url(#clip)')
+            .attr('d', area(data));
 
         var chartBody = cch.plot.append('g')
             .attr('clip-path', 'url(#clip)')
@@ -733,14 +746,14 @@ var Empowering = {};
             .attr('dy', '.35em');
 
         cch.downloadCSV = function() {
+            var csvDateFormat = d3.time.format('%Y-%m-%d %H:%M:%S');
             var csv = ['date;value'];
             attrs.data.forEach(function(el) {
-                csv.push(el.date + ';' + el.value);
+                csv.push(csvDateFormat(new Date(el.date)) + ';' + el.value);
             });
             window.open('data:application/csv;filename=file.csv;base64,' +
                 btoa(csv.join('\n'))
             );
-
         };
 
         return cch;
