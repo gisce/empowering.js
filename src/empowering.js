@@ -560,6 +560,7 @@ var Empowering = {};
             .range([height, 0]);
 
         var line = d3.svg.line()
+            .interpolate('monotone')
             .x(function(d) {
             return x(d.date);
         })
@@ -567,9 +568,13 @@ var Empowering = {};
             return y(d.value);
         });
 
+        var area = d3.svg.area()
+            .interpolate('monotone')
+            .x(function(d) { return x(d.date); })
+            .y0(height)
+            .y1(function(d) { return y(d.value); });
+
         function zoomed() {
-            console.log(d3.event.translate);
-            console.log(d3.event.scale);
             cch.plot.select('.x.axis').call(xAxis).selectAll('text')
                 .attr('dx', '-2.8em')
             .attr('dy', '.15em')
@@ -586,6 +591,9 @@ var Empowering = {};
             cch.plot.select('.line')
                 .attr('class', 'line')
                 .attr('d', line);
+            cch.plot.select('.area')
+                .attr('class', 'area')
+                .attr('d', area(data));
         }
 
         function mousemove() {
@@ -705,6 +713,11 @@ var Empowering = {};
             .attr('y', 0)
             .attr('width', width)
             .attr('height', height);
+
+        cch.plot.append('path')
+            .attr('class', 'area')
+            .attr('clip-path', 'url(#clip)')
+            .attr('d', area(data));
 
         var chartBody = cch.plot.append('g')
             .attr('clip-path', 'url(#clip)')

@@ -195,11 +195,16 @@
     stroke: #000;
     shape-rendering: crispEdges;
 }
+
+.cch path.area {
+    fill: lightsteelblue;
+}
+
 .cch .x.axis path {
     display: none;
 }
 .cch .line {
-    fill: lightsteelblue;
+    fill: none;
     stroke: steelblue;
     stroke-width: 1.5px;
 }
