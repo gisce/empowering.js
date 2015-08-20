@@ -498,7 +498,7 @@ var Empowering = {};
         var width = attrs.width || 600;
         var height = attrs.height || 300;
         var tpl = attrs.tpl || 3;
-        var tipWidth = Math.floor(width / tpl);
+        var tipWidth = (width / tpl) - 5;
         var iconSize = attrs.iconSize || 32;
 
         ot401.plot = d3.select(attrs.container)
