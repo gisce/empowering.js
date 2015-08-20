@@ -746,17 +746,14 @@ var Empowering = {};
             .attr('dy', '.35em');
 
         cch.downloadCSV = function() {
+            var csvDateFormat = d3.time.format('%Y-%m-%d %H:%M:%S');
             var csv = ['date;value'];
             attrs.data.forEach(function(el) {
-                var date = (
-                    new Date(el.date)
-                ).toJSON().substring(0, 16).replace('T', ' ');
-                csv.push(date + ';' + el.value);
+                csv.push(csvDateFormat(new Date(el.date)) + ';' + el.value);
             });
             window.open('data:application/csv;filename=file.csv;base64,' +
                 btoa(csv.join('\n'))
             );
-
         };
 
         return cch;
