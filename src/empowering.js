@@ -233,7 +233,8 @@ var Empowering = {};
         var y = d3.scale.linear().range([height, 0]);
 
         var xAxis = d3.svg.axis().scale(x).orient('bottom')
-            .tickFormat(d3.time.format('%m/%Y'));
+            .tickFormat(d3.time.format('%m/%Y'))
+            .ticks(d3.min([12, data.length]));
         var yAxis = d3.svg.axis().scale(y).orient('left').ticks(5);
 
         var line = d3.svg.line()
@@ -498,7 +499,7 @@ var Empowering = {};
         var width = attrs.width || 600;
         var height = attrs.height || 300;
         var tpl = attrs.tpl || 3;
-        var tipWidth = width / tpl;
+        var tipWidth = (width / tpl) - 5;
         var iconSize = attrs.iconSize || 32;
 
         ot401.plot = d3.select(attrs.container)
@@ -751,9 +752,32 @@ var Empowering = {};
             attrs.data.forEach(function(el) {
                 csv.push(csvDateFormat(new Date(el.date)) + ';' + el.value);
             });
-            window.open('data:application/csv;filename=file.csv;base64,' +
-                btoa(csv.join('\n'))
-            );
+            var fileName = 'cch_profile.csv';
+
+            var blob = new Blob([csv.join('\n')], {
+                type: 'text/csv;charset=utf-8;'
+            });
+
+            var link = document.createElement('a');
+            var url = URL.createObjectURL(blob);
+
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                link.setAttribute('href', url);
+                link.setAttribute('download', fileName);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                return;
+            }
+
+            if (navigator.msSaveBlob) { // IE 10+
+                navigator.msSaveBlob(blob, fileName);
+                return;
+            }
+            else {
+                window.open(url);
+            }
         };
 
         return cch;
