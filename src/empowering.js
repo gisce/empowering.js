@@ -233,7 +233,8 @@ var Empowering = {};
         var y = d3.scale.linear().range([height, 0]);
 
         var xAxis = d3.svg.axis().scale(x).orient('bottom')
-            .tickFormat(d3.time.format('%m/%Y'));
+            .tickFormat(d3.time.format('%m/%Y'))
+            .ticks(d3.min([12, data.length]));
         var yAxis = d3.svg.axis().scale(y).orient('left').ticks(5);
 
         var line = d3.svg.line()
