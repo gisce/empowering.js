@@ -752,9 +752,32 @@ var Empowering = {};
             attrs.data.forEach(function(el) {
                 csv.push(csvDateFormat(new Date(el.date)) + ';' + el.value);
             });
-            window.open('data:application/csv;filename=file.csv;base64,' +
-                btoa(csv.join('\n'))
-            );
+            var fileName = 'cch_profile.csv';
+
+            var blob = new Blob([csv.join('\n')], {
+                type: 'text/csv;charset=utf-8;'
+            });
+
+            var link = document.createElement('a');
+            var url = URL.createObjectURL(blob);
+
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                link.setAttribute('href', url);
+                link.setAttribute('download', fileName);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                return;
+            }
+
+            if (navigator.msSaveBlob) { // IE 10+
+                navigator.msSaveBlob(blob, fileName);
+                return;
+            }
+            else {
+                window.open(url);
+            }
         };
 
         return cch;
