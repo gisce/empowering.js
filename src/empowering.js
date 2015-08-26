@@ -135,6 +135,32 @@ var Empowering = {};
             parseInt(data.consumption),
             parseInt(data.averageEffConsumption)
         ];
+
+        /*
+        Some calculated metadata for OT101
+        */
+
+        ot101.getEfficientCustomersPercent = function() {
+            return parseFloat(((
+                data.numberCustomersEff / (
+                    data.numberCustomersEff + data.numberCustomers
+                )
+            ) * 100).toFixed(2));
+        };
+
+        ot101.getRanking = function() {
+            if (data.consumption < data.averageEffConsumption) {
+                return 'GREAT';
+            }
+            else if (data.consumption < data.averageConsumption) {
+                return 'GOOD';
+            }
+            else {
+                return 'BAD';
+            }
+
+        };
+
         var styles = {
           0: 'averageConsumption',
           1: 'consumption',
@@ -222,6 +248,42 @@ var Empowering = {};
             attrs.data = JSON.parse(attrs.data);
         }
         var data = attrs.data;
+
+        ot103.getDiffConsumption = function() {
+            var eff = 0;
+            var med = 0;
+            var consumption = d3.sum(data, function(d) {
+                return d.consumption;
+            });
+            var avgConsumption = d3.sum(data, function(d) {
+                if (d.consumption !== null) {
+                    return d.averageConsumption;
+                }
+            });
+            var avgEffConsumption = d3.sum(data, function(d) {
+                if (d.consumption !== null) {
+                    return d.averageEffConsumption;
+                }
+            });
+            if (consumption < avgEffConsumption) {
+                eff = (avgEffConsumption - consumption) / avgEffConsumption;
+                eff = eff * -1;
+                med = (avgConsumption - consumption) / avgConsumption;
+                med = med * -1;
+            }
+            else if (consumption < avgConsumption) {
+                eff = (consumption - avgEffConsumption) / avgEffConsumption;
+                med = (avgConsumption - consumption) / avgConsumption;
+                med = med * -1;
+            }
+            else {
+                eff = (consumption - avgEffConsumption) / avgEffConsumption;
+                med = (consumption - avgConsumption) / avgConsumption;
+            }
+            eff = parseFloat((eff * 100).toFixed(2));
+            med = parseFloat((med * 100).toFixed(2));
+            return {eff: eff, med: med};
+        };
 
         var parseDate = d3.time.format('%Y%m').parse;
 
@@ -397,6 +459,12 @@ var Empowering = {};
             attrs.data = JSON.parse(attrs.data);
         }
         var data = attrs.data;
+
+        ot201.getDiffConsumption = function() {
+            var diff = (data.actualConsumption - data.previousConsumption);
+            diff = diff / data.previousConsumption;
+            return parseFloat((diff * 100).toFixed(2));
+        };
 
         var cons = [
             parseInt(data.previousConsumption),
