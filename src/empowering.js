@@ -693,6 +693,10 @@ var Empowering = {};
                   'translate(' + margin.left + ',' + margin.top + ')')
             .call(zoom);
 
+        if (data.length === 0) {
+            return cch;
+        }
+
         cch.plot.append('svg:rect')
             .attr('width', width)
             .attr('height', height)
