@@ -283,7 +283,6 @@
     });
 
     d3.json('cch.json', function(err, json) {
-        console.log(json.length);
         cch = Empowering.Graphics.CCH({
             container: '#chartdiv_cch', data: json, locale: 'ca'
         });
