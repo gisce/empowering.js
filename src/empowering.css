@@ -90,6 +90,11 @@
 
 }
 
+.ot103.consumption {
+    color: #DECD26;
+    font-weight:bold;
+}
+
 .point.averageConsumption {
     fill: #5DC221;
 }
@@ -172,6 +177,7 @@
     float: left;
     width: 300px;
     padding-left: 5px;
+    font-size: 10px;
 }
 
 .ot401 .tip .icon {

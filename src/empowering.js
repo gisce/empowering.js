@@ -185,7 +185,7 @@ var Empowering = {};
                 .attr('height', height);
 
         var barWidth = width / cons.length;
-        var labelSize = 10;
+        var labelSize = 8;
         var barHeight = height - labelSize - 10;
         var rectWidth = barWidth * 0.375;
         var barEnerWidth = barWidth * 0.5;
@@ -377,7 +377,7 @@ var Empowering = {};
             bar.append('g')
                 .attr('class', 'legend')
                 .append('text')
-                .attr('x', 100 * idx)
+                .attr('x', 120 * idx)
                 .attr('y', height + margin.bottom)
                 .attr('class', styles[idx])
                 .text(labels[idx]);
